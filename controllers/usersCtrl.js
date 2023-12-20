@@ -1,6 +1,9 @@
 import User from '../model/User.js'
 import asyncHandler from 'express-async-handler'
 import bcrypt from 'bcryptjs'
+import generateToken from '../utils/generateToken.js'
+import { getTokenFromHeader } from '../utils/getTokenFromHeader.js'
+import { verifyToken } from '../utils/verifyToken.js'
 
 // @desc    Register User
 // @route   POST /api/v1/users/register
@@ -33,6 +36,7 @@ export const registerUserCtrl = asyncHandler(async (req, res) => {
 // @desc    Login User
 // @route   POST /api/v1/users/login
 // @access  Public
+
 export const loginUserCtrl = asyncHandler(async (req, res) => {
   const { email, password } = req.body
   // Find the user in the database by email only
@@ -43,9 +47,24 @@ export const loginUserCtrl = asyncHandler(async (req, res) => {
     res.json({
       status: 'success',
       message: 'User logged in successfully',
-      userFound
+      userFound,
+      token: generateToken(userFound?._id)
     })
   } else {
     throw new Error('Invalid login credentials')
   }
+})
+
+// @desc    Get user profile
+// @route   GET /api/v1/users/profile
+// @access  Private
+
+export const getUserProfileCtrl = asyncHandler(async (req, res) => {
+  const token = getTokenFromHeader(req)
+  // verify token
+  const verified = verifyToken(token)
+  console.log(req)
+  res.json({
+    msg: 'Welcome to Profile Page'
+  })
 })

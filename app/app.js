@@ -12,7 +12,7 @@ const app = express()
 // pass incoming data
 app.use(express.json())
 //routes
-app.use('/', userRoutes)
+app.use('/api/v1/users/', userRoutes)
 
 // error middleware
 app.use(notFound)
