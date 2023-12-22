@@ -8,6 +8,7 @@ import categoryRoute from '../routes/categoryRoute.js'
 import brandRoute from '../routes/brandRoute.js'
 import colorRoute from '../routes/colorRoute.js'
 import reviewRoute from '../routes/reviewRoute.js'
+import orderRoute from '../routes/orderRoute.js'
 import { globalErrHandler, notFound } from '../middlewares/globalErrHandler.js'
 
 //db connect
@@ -24,6 +25,7 @@ app.use('/api/v1/categories/', categoryRoute)
 app.use('/api/v1/brands/', brandRoute)
 app.use('/api/v1/colors/', colorRoute)
 app.use('/api/v1/reviews/', reviewRoute)
+app.use('/api/v1/orders/', orderRoute)
 
 // error middleware
 app.use(notFound)

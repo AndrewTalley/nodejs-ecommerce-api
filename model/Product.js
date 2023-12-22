@@ -66,13 +66,21 @@ const ProductSchema = new Schema(
     toJSON: { virtuals: true }
   }
 )
-// Virtuals
+// Virtuals //
+
+// qty left
+ProductSchema.virtual('qtyLeft').get(function () {
+  const product = this
+  return product.totalQty - product.totalSold
+})
+
 // Total rating
 ProductSchema.virtual('totalReviews').get(function () {
   const product = this
   return product?.reviews?.length
 })
-// average Rating
+
+// Average Rating
 ProductSchema.virtual('averageRating').get(function () {
   let ratingsTotal = 0
   const product = this
